@@ -9,9 +9,9 @@ namespace TaskFlow.Application
         private readonly ITaskFlowUnitOfWork _taskFlowUnitOfWork = taskFlowUnitOfWork;
 
 
-        public async Task<(IList<Status> data, int total, int totalDisplay)> GetAllStatusAsync()
+        public async Task<(IList<Status> data, int total, int totalDisplay)> GetAllStatusAsync(int pageIndex, int pageSize, DataTablesSearch search, string? order)
         {
-            return await _taskFlowUnitOfWork.StatusRepository.GetDynamicStatusAsync();
+            return await _taskFlowUnitOfWork.StatusRepository.GetDynamicStatusAsync(pageIndex, pageSize, search, order);
         }
     }
 }

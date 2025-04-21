@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Domain.Entities;
@@ -68,5 +69,21 @@ namespace TaskFlow.Web.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var status = await _statusService.GetStatusById(id);
+            var model = new StatusEditModel()
+            {
+                Id = id,
+                StatusName = status.StatusName,
+                StatusDescription = status.StatusDescription
+            };
+
+            return View(model);
+        }
+
+
+       
     }
 }

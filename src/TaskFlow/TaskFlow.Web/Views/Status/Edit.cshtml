@@ -1,6 +1,6 @@
-﻿@model StatusCreateModel
+﻿@model StatusEditModel
 @{
-    ViewData["Title"] = "Create New Status";
+    ViewData["Title"] = "Edit Status";
 }
 
 <div class="container-fluid">
@@ -9,7 +9,8 @@
             <div class="card-header">
                 <h3 class="card-title">@ViewData["Title"]</h3>
             </div>
-            <form asp-antiforgery="true" asp-controller="Status" asp-action="Create" method="post" id="create-form">
+            <form asp-antiforgery="true" asp-controller="Status" asp-action="Edit" method="post" id="update-form">
+                <input type="hidden" asp-for="Id" />
                 <div class="card-body">
                     <div class="form-group">
                         <label asp-for="StatusName">Title</label>
@@ -35,10 +36,10 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <partial name="../Shared/_ValidationScriptsPartial.cshtml" />
     <script>
-           $('#create-form').validate({
+           $('#update-form').validate({
             rules: {
                 statusName: {
                     required: true,

@@ -13,5 +13,11 @@ namespace TaskFlow.Application
         {
             return await _taskFlowUnitOfWork.StatusRepository.GetDynamicStatusAsync(pageIndex, pageSize, search, order);
         }
+
+        public async Task CreateStatusAsync(Status status)
+        {
+            await _taskFlowUnitOfWork.StatusRepository.AddAsync(status);
+            await _taskFlowUnitOfWork.SaveAsync();
+        }
     }
 }

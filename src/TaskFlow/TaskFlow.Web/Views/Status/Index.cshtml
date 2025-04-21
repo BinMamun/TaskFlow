@@ -2,7 +2,7 @@
 	ViewData["Title"] = "Status";
 }
 
-<section class="content mt-3">
+<section class="content">
 	<div class="container-fluid">
 		@* <partial name="./_CreateCategoryForm.cshtml" />
         <partial name="./_UpdateCategoryForm.cshtml" />
@@ -10,36 +10,36 @@
         <partial name="../Shared/PartialViews/_DeleteModal.cshtml" />
  *@
 
-		<div class="card">
-			<div class="row">
-				<div class="col-12">
-					<!-- /.card -->
-					<div class="card-header">
-						<div class="row">
-							<div class="col-sm-12 col-md-10">
-								<h3 class="card-title">Status List</h3>
-							</div>
-							<div class="col-sm-12 col-md-2 d-flex justify-content-end">
-								<a data-toggle="modal" data-target="#createCategoryModal" asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-sm btn-info">
-									<i class="bi bi-plus"></i>Add
-								</a>
-							</div>
+
+		<div class="row">
+			<div class="col-12">
+				<!-- /.card -->
+				<div class="card-header">
+					<div class="row">
+						<div class="col-sm-12 col-md-10">
+							<h3 class="card-title">Status List</h3>
+						</div>
+						<div class="col-sm-12 col-md-2 d-flex justify-content-end">
+							<a asp-controller="Status" asp-action="Create" class="btn btn-sm btn-primary">
+								<i class="bi bi-plus"></i>Add
+							</a>
 						</div>
 					</div>
-					<div class="card-body">
-						<table id="status-table" class="table table-sm table-hover">
-							<thead class="table-header">
-								<tr>
-									<th class="col-5">Name</th>
-									<th class="col-6">Description</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-						</table>
-					</div>
+				</div>
+				<div class="card-body">
+					<table id="status-table" class="table table-sm table-hover">
+						<thead class="table-header">
+							<tr>
+								<th class="col-5">Name</th>
+								<th class="col-6">Description</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+					</table>
 				</div>
 			</div>
 		</div>
+
 	</div>
 </section>
 

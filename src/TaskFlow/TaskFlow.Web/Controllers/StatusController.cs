@@ -8,7 +8,7 @@ using TaskFlow.Web.Models;
 namespace TaskFlow.Web.Controllers
 {
     public class StatusController(
-        ILogger<StatusController> logger, 
+        ILogger<StatusController> logger,
         IStatusService statusService) : Controller
     {
         private readonly ILogger<StatusController> _logger = logger;
@@ -50,35 +50,23 @@ namespace TaskFlow.Web.Controllers
             return View(model);
         }
 
-        //[HttpPost, ValidateAntiForgeryToken, Authorize(Policy = "CreatePolicy")]
-        //public async Task<IActionResult> Create(StatusCreateModel model)
-        //{
-        //    var category = _mapper.Map<ItemCategory>(model);
-        //    category.Id = Guid.NewGuid();
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            await _categoryManagementService.CreateItemCategoryAsync(category);
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(StatusCreateModel model)
+        {
 
-        //            TempData.Put("ResponseMessage", new ResponseModel()
-        //            {
-        //                Message = "Category created Successfully",
-        //                Type = ResponseTypes.Success
-        //            });
-        //            return RedirectToAction("Index");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            TempData.Put("ResponseMessage", new ResponseModel()
-        //            {
-        //                Message = "Catgory creation failed",
-        //                Type = ResponseTypes.Danger
-        //            });
-        //            return RedirectToAction("Index");
-        //        }
-        //    }
-        //    return RedirectToAction("Index");
-        //}
+            if (ModelState.IsValid)
+            {
+                var status = new Status()
+                {
+                    Id = Guid.NewGuid(),
+                    StatusName = model.StatusName,
+                    StatusDescription = model.StatusDescription
+                };
+
+                await _statusService.CreateStatusAsync(status);
+
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

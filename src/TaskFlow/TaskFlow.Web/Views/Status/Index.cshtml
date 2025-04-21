@@ -4,12 +4,7 @@
 
 <section class="content">
 	<div class="container-fluid">
-		@* <partial name="./_CreateCategoryForm.cshtml" />
-        <partial name="./_UpdateCategoryForm.cshtml" />
-        <partial name="../Shared/PartialViews/_ResponsePartial.cshtml" />
-        <partial name="../Shared/PartialViews/_DeleteModal.cshtml" />
- *@
-
+        <partial name="../Shared/_DeleteModal.cshtml" />
 
 		<div class="row">
 			<div class="col-12">
@@ -93,22 +88,22 @@
 								<button type="submit" class="btn btn-sm"
 										onclick="window.location.href='/Status/Edit/${data}'"
 										value='${data}' data-id='${data}' title="Edit">
-										<i class="default-color bi bi-pencil-square"></i></button>
+										<i class="text-primary bi bi-pencil-square"></i></button>
 
-										<button type="submit" class="btn btn-sm show-bs-modal"
+										<button class="btn btn-sm show-bs-modal"
 										data-toggle="modal" data-target="#delete-modal"
 										data-id='${data}' value='${data}' title="Delete">
-										<i class="red-color bi bi-trash"></i></button>`;
+										<i class="text-danger bi bi-trash"></i></button>`;
 							}
 						}
 					],
 			});
 
-			$('#serviceTable').on('click', '.show-bs-modal', function (event) {
+			$('#status-table').on('click', '.show-bs-modal', function (event) {
 			let id = $(this).data("id");
 			let modal = $('#delete-modal');
 			$("#deleteId").val(id);
-			$("#delete-form").attr("action", "/Admin/Service/Delete");
+			$("#delete-form").attr("action", "/Status/Delete");
 		});
 
 

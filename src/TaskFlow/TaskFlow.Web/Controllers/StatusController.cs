@@ -11,13 +11,8 @@ namespace TaskFlow.Web.Controllers
     {
         private readonly ILogger<StatusController> _logger = logger;
         private readonly IStatusService _statusService = statusService;
-        public async Task<IActionResult> Index(StatusListModel model)
+        public IActionResult Index()
         {
-            var result = await _statusService.GetAllStatusAsync(
-                model.PageIndex,
-                model.PageSize,
-                model.Search,
-                null);
             return View();
         }
 

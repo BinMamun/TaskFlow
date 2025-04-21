@@ -47,25 +47,25 @@
         </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-light-info elevation-4">
+        <aside class="main-sidebar sidebar-light-primary elevation-4">
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 @* <partial name="./PartialViews/_UsernamePartialView.cshtml" /> *@
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
+                <nav class="mt-5">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <li class="nav-item menu-open">
-                            <a class="nav-link active" asp-area="" asp-controller="Home"
-                               asp-action="Index">
+                            <a asp-controller="Home"
+                               asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")">
                                 <i class="fas fa-home nav-icon"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="Status" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Status" ? "active" : "")">
-                                <i class="nav-icon bi bi-bar-chart-fill text-info"></i>
+                                <i class="nav-icon bi bi-bar-chart-fill text-primary"></i>
                                 <p>
                                     Status
                                 </p>
@@ -73,7 +73,7 @@
                         </li>
                         <li class="nav-item">
                             <a asp-controller="TaskItem" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "TaskItem" ? "active" : "")">
-                                <i class="nav-icon bi bi-ui-checks text-info"></i>
+                                <i class="nav-icon bi bi-ui-checks text-primary"></i>
                                 <p>
                                     Tasks
                                 </p>
@@ -83,7 +83,7 @@
                         {
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon bi bi-tools text-info"></i>
+                                    <i class="nav-icon bi bi-tools text-primary"></i>
                                     <p>
                                         Tools
                                         <i class="fas fa-angle-down right"></i>

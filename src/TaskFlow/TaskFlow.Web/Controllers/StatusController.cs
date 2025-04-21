@@ -1,5 +1,7 @@
 ﻿using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.ServiceInterfaces;
 using TaskFlow.Web.Models;
 
@@ -40,5 +42,43 @@ namespace TaskFlow.Web.Controllers
             };
             return Json(data);
         }
+
+
+        public IActionResult Create()
+        {
+            var model = new StatusCreateModel();
+            return View(model);
+        }
+
+        //[HttpPost, ValidateAntiForgeryToken, Authorize(Policy = "CreatePolicy")]
+        //public async Task<IActionResult> Create(StatusCreateModel model)
+        //{
+        //    var category = _mapper.Map<ItemCategory>(model);
+        //    category.Id = Guid.NewGuid();
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            await _categoryManagementService.CreateItemCategoryAsync(category);
+
+        //            TempData.Put("ResponseMessage", new ResponseModel()
+        //            {
+        //                Message = "Category created Successfully",
+        //                Type = ResponseTypes.Success
+        //            });
+        //            return RedirectToAction("Index");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            TempData.Put("ResponseMessage", new ResponseModel()
+        //            {
+        //                Message = "Catgory creation failed",
+        //                Type = ResponseTypes.Danger
+        //            });
+        //            return RedirectToAction("Index");
+        //        }
+        //    }
+        //    return RedirectToAction("Index");
+        //}
     }
 }

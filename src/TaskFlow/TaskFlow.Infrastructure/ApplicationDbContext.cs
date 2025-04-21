@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TaskFlow.Domain.Entities;
 
 namespace TaskFlow.Web.Data
 {
@@ -16,5 +16,8 @@ namespace TaskFlow.Web.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        public DbSet<Status> Statuses { get; set; } 
+        public IList<TaskItem> TaskItems { get; set; }
     }
 }

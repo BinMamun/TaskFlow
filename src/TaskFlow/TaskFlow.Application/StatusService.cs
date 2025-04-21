@@ -19,5 +19,10 @@ namespace TaskFlow.Application
             await _taskFlowUnitOfWork.StatusRepository.AddAsync(status);
             await _taskFlowUnitOfWork.SaveAsync();
         }
+
+        public async Task<Status> GetStatusById(Guid id)
+        {
+            return await _taskFlowUnitOfWork.StatusRepository.GetByIdAsync(id);
+        }
     }
 }

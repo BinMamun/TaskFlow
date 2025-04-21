@@ -8,5 +8,6 @@ namespace TaskFlow.Domain.ServiceInterfaces
 
         Task CreateStatusAsync(Status status);
         Task<Status> GetStatusById(Guid id);
+        Task UpdateStatusAsync(Status service);
     }
 }

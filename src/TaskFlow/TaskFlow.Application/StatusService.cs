@@ -24,5 +24,11 @@ namespace TaskFlow.Application
         {
             return await _taskFlowUnitOfWork.StatusRepository.GetByIdAsync(id);
         }
+
+        public async Task UpdateStatusAsync(Status status)
+        {
+            await _taskFlowUnitOfWork.StatusRepository.EditAsync(status);
+            await _taskFlowUnitOfWork.SaveAsync();
+        }
     }
 }

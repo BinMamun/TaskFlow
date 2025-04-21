@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TaskFlow.Application;
 using TaskFlow.Domain;
+using TaskFlow.Domain.RepositoryContracts;
+using TaskFlow.Domain.ServiceInterfaces;
+using TaskFlow.Infrastructure.Repositories;
 using TaskFlow.Infrastructure.UnitOfWork;
 using TaskFlow.Web.Data;
 
@@ -13,6 +17,10 @@ namespace TaskFlow.Web
                  options.UseNpgsql(connectionString));
 
             services.AddScoped<ITaskFlowUnitOfWork, TaskFlowUnitOfWork>();
+            
+            services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+
         }
     }
 }

@@ -55,101 +55,29 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
+
                         <li class="nav-item menu-open">
-                            <a class="nav-link active" asp-area="Admin" asp-controller="Dashboard"
+                            <a class="nav-link active" asp-area="" asp-controller="Home"
                                asp-action="Index">
                                 <i class="fas fa-home nav-icon"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-archive text-info"></i>
+                            <a asp-controller="Status" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Status" ? "active" : "")">
+                                <i class="nav-icon bi bi-bar-chart-fill text-info"></i>
                                 <p>
-                                    Items / Services
-                                    <i class="fas fa-angle-down right"></i>
+                                    Status
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-controller="Item" asp-action="Index"
-                                       asp-area="Admin" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" ? "active" : "")">
-                                        <i class="far nav-icon"></i>
-                                        <p>Item List</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-controller="Service" asp-action="Index"
-                                       asp-area="Admin" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Service" ? "active" : "")">
-                                        <i class="far nav-icon"></i>
-                                        <p>Service List</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Category"
-                                       asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Category" ? "active" : "")">
-                                        <i class="far nav-icon"></i>
-                                        <p>Item Categories</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="MeasurementUnit"
-                                       asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "MeasurementUnit" ? "active" : "")">
-                                        <i class="far nav-icon"></i>
-                                        <p>Measurement Units</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Tax"
-                                       asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Tax" ? "active" : "")">
-                                        <i class="far nav-icon"></i>
-                                        <p>Taxes</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-shop text-info"></i>
+                            <a asp-controller="TaskItem" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "TaskItem" ? "active" : "")">
+                                <i class="nav-icon bi bi-ui-checks text-info"></i>
                                 <p>
-                                    Stocks
-                                    <i class="right fas fa-angle-down"></i>
+                                    Tasks
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Warehouse" asp-action="Index"
-                                       class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Warehouse" ? "active" : "")">
-                                        <i class="nav-icon fas"></i>
-                                        <p>Warehouse</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="StockList" asp-action="Index"
-                                       class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockList" ? "active" : "")">
-                                        <i class="nav-icon fas"></i>
-                                        <p>Stock List</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="StockAdjustment"
-                                       asp-action="Index"
-                                       class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockAdjustment" ? "active" : "")">
-                                        <i class="nav-icon fas"></i>
-                                        <p>Stock Adjustment</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="StockTransfer"
-                                       asp-action="Index"
-                                       class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransfer" ? "active" : "")">
-                                        <i class="nav-icon fas"></i>
-                                        <p>Stock Transfer</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         @if (User.IsInRole("Super Admin"))
                         {

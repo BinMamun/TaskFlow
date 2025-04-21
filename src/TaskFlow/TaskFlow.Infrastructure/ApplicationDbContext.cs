@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TaskFlow.Web.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

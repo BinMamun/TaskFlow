@@ -5,6 +5,6 @@
         public Guid Id { get; set; }
         public string StatusName { get; set; }
         public string? StatusDescription { get; set; } = string.Empty;
-        public List<Task>? Tasks { get; set; }
+        public IList<TaskItem>? TaskItems { get; set; }
     }
 }

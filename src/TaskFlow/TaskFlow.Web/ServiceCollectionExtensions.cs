@@ -5,7 +5,7 @@ using TaskFlow.Web.Data;
 
 namespace TaskFlow.Web
 {
-    public static class DIModule
+    public static class ServiceCollectionExtensions
     {
         public static void ServiceRegistration(this IServiceCollection services, string connectionString)
         {

@@ -1,6 +1,9 @@
-﻿namespace TaskFlow.Domain
+﻿using TaskFlow.Domain.RepositoryContracts;
+
+namespace TaskFlow.Domain
 {
     public interface ITaskFlowUnitOfWork : IUnitOfWork
     {
+        public IStatusRepository StatusRepository { get; }
     }
 }

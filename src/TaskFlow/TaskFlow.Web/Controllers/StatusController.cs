@@ -89,18 +89,24 @@ namespace TaskFlow.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-             
+
                 var service = await _statusService.GetStatusById(model.Id);
 
                 service.StatusName = model.StatusName;
                 service.StatusDescription = model.StatusDescription;
 
                 await _statusService.UpdateStatusAsync(service);
-                    
+
                 return RedirectToAction("Index");
             }
-           
+
             return View(model);
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _statusService.DeleteStatusAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }

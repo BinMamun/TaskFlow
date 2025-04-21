@@ -30,5 +30,11 @@ namespace TaskFlow.Application
             await _taskFlowUnitOfWork.StatusRepository.EditAsync(status);
             await _taskFlowUnitOfWork.SaveAsync();
         }
+
+        public async Task DeleteStatusAsync(Guid id)
+        {
+            await _taskFlowUnitOfWork.StatusRepository.RemoveAsync(id);
+            await _taskFlowUnitOfWork.SaveAsync();
+        }
     }
 }

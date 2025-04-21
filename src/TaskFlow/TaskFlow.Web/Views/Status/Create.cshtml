@@ -12,7 +12,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form asp-antiforgery="true" asp-controller="Status" asp-action="Create" method="post" id="createForm">
+            <form asp-antiforgery="true" asp-controller="Status" asp-action="Create" method="post" id="create-form">
                 <div class="card-body">
                     <div class="form-group">
                         <label asp-for="StatusName">Title</label>
@@ -37,4 +37,34 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <partial name="../Shared/_ValidationScriptsPartial.cshtml" />
+    <script>
+           $('#create-form').validate({
+            rules: {
+                statusName: {
+                    required: true,
+                }
+            },
+            messages: {
+                statusName: {
+                    required: "Title is required",
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    </script>
+
+}
 

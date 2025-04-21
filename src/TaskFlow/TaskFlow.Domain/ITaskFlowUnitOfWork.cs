@@ -5,5 +5,6 @@ namespace TaskFlow.Domain
     public interface ITaskFlowUnitOfWork : IUnitOfWork
     {
         public IStatusRepository StatusRepository { get; }
+        public ITaskItemRepository TaskItemRepository { get; }
     }
 }

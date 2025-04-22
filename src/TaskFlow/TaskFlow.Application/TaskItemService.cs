@@ -12,5 +12,10 @@ namespace TaskFlow.Application
         {
             return await _taskUnitOfWork.TaskItemRepository.GetAllTaskItemsAsync(pageIndex, pageSize, search, order);
         }
+
+        public async Task<IList<TaskItem>> GetTaskListAsync()
+        {
+            return await _taskUnitOfWork.TaskItemRepository.GetAllAsync();
+        }
     }
 }

@@ -19,5 +19,6 @@ namespace TaskFlow.Web.Data
 
         public DbSet<Status> Statuses { get; set; } 
         public IList<TaskItem> TaskItems { get; set; }
+        public DbSet<TaskDependency> TaskDependencies { get; set; }
     }
 }

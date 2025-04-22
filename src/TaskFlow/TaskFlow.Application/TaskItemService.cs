@@ -8,7 +8,7 @@ namespace TaskFlow.Application
     {
         private readonly ITaskFlowUnitOfWork _taskUnitOfWork = taskUnitOfWork;
 
-        public async Task<(IList<TaskItem> data, int total, int totalDisplay)> GetAllTasksAsync(int pageIndex, int pageSize, DataTablesSearch search, string? order)
+        public async Task<(IList<TaskItem> data, int total, int totalDisplay)> GetAllTasksAsync(int pageIndex, int pageSize, TaskItemDto search, string? order)
         {
             return await _taskUnitOfWork.TaskItemRepository.GetAllTaskItemsAsync(pageIndex, pageSize, search, order);
         }

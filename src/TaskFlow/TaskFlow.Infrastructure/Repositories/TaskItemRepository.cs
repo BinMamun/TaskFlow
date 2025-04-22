@@ -12,19 +12,37 @@ namespace TaskFlow.Infrastructure.Repositories
         {
         }
 
-        public async Task<(IList<TaskItem> data, int total, int totalDisplay)> GetAllTaskItemsAsync(int pageIndex, int pageSize, DataTablesSearch search, string? order)
+        public async Task<(IList<TaskItem> data, int total, int totalDisplay)> GetAllTaskItemsAsync(int pageIndex, int pageSize, TaskItemDto search, string? order)
         {
-            var searchText = search.Value;
+            var query = _dbSet.AsQueryable();
 
-            if (string.IsNullOrWhiteSpace(searchText))
-                return await GetDynamicAsync(null, order, x => x.Include(y => y.Status), pageIndex, pageSize, true);
+            var total = await query.CountAsync();
 
-            else
-                return await GetDynamicAsync(x => 
-                                        x.Title.Contains(searchText) ||
-                                        x.Description.Contains(searchText),
-                                        order, x => x.Include(y => y.Status),
-                                        pageIndex, pageSize,true);
+            if (!string.IsNullOrWhiteSpace(search.StatusId) && Guid.TryParse(search.StatusId, out var statusId))
+            {
+                query = query.Where(p => p.StatusId.Equals(statusId));
+            }
+
+            if (search.Priority != null)
+            {
+                query = query.Where(p => p.Priority.Equals(search.Priority));
+            }
+
+            if (search.FromDate.HasValue)
+            {
+                query = query.Where(p => p.DueDate >= search.FromDate);
+            }
+
+            if (search.ToDate.HasValue)
+            {
+                query = query.Where(p => p.DueDate <= search.ToDate);
+            }
+
+            var (data, totalDisplay) = await GetDynamicDataAsync(query, order, x => x.Include(y => y.Status), pageIndex, pageSize, true);
+
+            return (data, total, totalDisplay);
         }
+
+
     }
 }

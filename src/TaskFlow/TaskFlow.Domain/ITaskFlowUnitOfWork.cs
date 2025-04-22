@@ -6,5 +6,6 @@ namespace TaskFlow.Domain
     {
         public IStatusRepository StatusRepository { get; }
         public ITaskItemRepository TaskItemRepository { get; }
+        public ITaskDependencyRepository TaskDependencyRepository { get; }
     }
 }

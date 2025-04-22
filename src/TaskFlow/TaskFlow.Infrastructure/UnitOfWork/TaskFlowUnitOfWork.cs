@@ -9,7 +9,8 @@ namespace TaskFlow.Infrastructure.UnitOfWork
         public TaskFlowUnitOfWork(
             ApplicationDbContext dbContext,
             IStatusRepository statusRepository,
-            ITaskItemRepository taskItemRepository
+            ITaskItemRepository taskItemRepository,
+            ITaskDependencyRepository taskDependencyRepository
             ) : base(dbContext)
         {
             StatusRepository = statusRepository;
@@ -18,6 +19,7 @@ namespace TaskFlow.Infrastructure.UnitOfWork
 
         public IStatusRepository StatusRepository { get; private set; }
         public ITaskItemRepository TaskItemRepository { get; private set; }
+        public ITaskDependencyRepository TaskDependencyRepository { get; private set; }
 
     }
 }

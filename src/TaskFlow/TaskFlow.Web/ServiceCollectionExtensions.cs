@@ -24,6 +24,8 @@ namespace TaskFlow.Web
             services.AddScoped<ITaskItemService, TaskItemService>();
             services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 
+            services.AddScoped<ITaskDependencyRepository, TaskDependencyRepository>();
+
         }
     }
 }

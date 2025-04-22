@@ -25,24 +25,23 @@ namespace TaskFlow.Infrastructure.Repositories
 
             if (search.Priority != null)
             {
-                query = query.Where(p => p.Priority.Equals(search.Priority));
+                query = query.Where(p => (int)p.Priority == search.Priority);
             }
 
             if (search.FromDate.HasValue)
             {
-                query = query.Where(p => p.DueDate >= search.FromDate);
+                query = query.Where(p => p.DueDate >= DateTime.SpecifyKind((DateTime)search.FromDate, DateTimeKind.Utc));
             }
 
             if (search.ToDate.HasValue)
             {
-                query = query.Where(p => p.DueDate <= search.ToDate);
+                query = query.Where(p => p.DueDate <= DateTime.SpecifyKind((DateTime)search.ToDate, DateTimeKind.Utc));
             }
 
             var (data, totalDisplay) = await GetDynamicDataAsync(query, order, x => x.Include(y => y.Status), pageIndex, pageSize, true);
 
             return (data, total, totalDisplay);
         }
-
 
     }
 }

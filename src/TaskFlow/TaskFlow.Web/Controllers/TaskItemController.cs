@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,13 @@ namespace TaskFlow.Web.Controllers
         private readonly ILogger<TaskItemController> _logger = logger;
         private readonly ITaskItemService _taskItemService = taskItemService;
 
-        public IActionResult Index(TaskListModel model)
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = new TaskListModel();
+            
+            var status = await _taskItemService.GetStatusListAsync();
+            model.SetAllStatuses(status);
+            return View(model);
         }
 
         [HttpPost]
@@ -26,7 +31,7 @@ namespace TaskFlow.Web.Controllers
             var result = await _taskItemService.GetAllTasksAsync(
                 model.PageIndex,
                 model.PageSize,
-                model.Search,
+                model.SearchParams,
                 model.FormatSortExpression("DueDate", "Title", "Description", "Priority", "StatusId", "StatusName"));
 
             var data = new

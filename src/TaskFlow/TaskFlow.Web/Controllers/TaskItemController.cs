@@ -1,5 +1,8 @@
 ﻿using System.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.ServiceInterfaces;
 using TaskFlow.Web.Models;
 
@@ -48,6 +51,41 @@ namespace TaskFlow.Web.Controllers
         public async Task<IActionResult> Create()
         {
             var model = new TaskCreateModel();
+            var tasks = await _taskItemService.GetTaskListAsync();
+            var statuses = await _taskItemService.GetStatusListAsync();
+
+            model.SetAllTasks(tasks);
+            model.SetAllStatuses(statuses);
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(TaskCreateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var taskItem = new TaskItem
+                {
+                    Id = Guid.NewGuid(),
+                    Title = model.Title,
+                    Description = model.Description,
+                    DueDate = model.DueDate,
+                    StatusId = model.StatusId,
+                    Priority = model.Priority
+                };
+
+                await _taskItemService.CreateNewTaskAsync(taskItem);
+
+                if (model.DueDate != DateTime.MinValue && model.PrerequisiteIds != null)
+                {
+                    await _taskItemService
+                        .CreateNewDependencyAsync(taskItem.Id, model.PrerequisiteIds);
+                }
+
+                return RedirectToAction("Index");
+            }
+
             var tasks = await _taskItemService.GetTaskListAsync();
             var statuses = await _taskItemService.GetStatusListAsync();
 

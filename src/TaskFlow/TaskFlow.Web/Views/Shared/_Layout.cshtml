@@ -65,7 +65,7 @@
                         </li>
                         <li class="nav-item">
                             <a asp-controller="Status" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Status" ? "active" : "")">
-                                <i class="nav-icon bi bi-bar-chart-fill text-primary"></i>
+                                <i class="nav-icon bi bi-bar-chart-fill"></i>
                                 <p>
                                     Status
                                 </p>
@@ -73,7 +73,7 @@
                         </li>
                         <li class="nav-item">
                             <a asp-controller="TaskItem" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "TaskItem" ? "active" : "")">
-                                <i class="nav-icon bi bi-ui-checks text-primary"></i>
+                                <i class="nav-icon bi bi-ui-checks"></i>
                                 <p>
                                     Tasks
                                 </p>

@@ -1,4 +1,5 @@
-﻿using TaskFlow.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using TaskFlow.Domain;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.RepositoryContracts;
 using TaskFlow.Web.Data;
@@ -16,13 +17,14 @@ namespace TaskFlow.Infrastructure.Repositories
             var searchText = search.Value;
 
             if (string.IsNullOrWhiteSpace(searchText))
-                return await GetDynamicAsync(null, order, null, pageIndex, pageSize, true);
+                return await GetDynamicAsync(null, order, x => x.Include(y => y.Status), pageIndex, pageSize, true);
 
             else
                 return await GetDynamicAsync(x => 
                                         x.Title.Contains(searchText) ||
                                         x.Description.Contains(searchText),
-                                        order, null, pageIndex, pageSize, true);
+                                        order, x => x.Include(y => y.Status),
+                                        pageIndex, pageSize,true);
         }
     }
 }

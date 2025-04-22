@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TaskFlow.Domain.Entities;
+﻿using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.RepositoryContracts;
 using TaskFlow.Web.Data;
 

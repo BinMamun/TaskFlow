@@ -70,7 +70,7 @@ namespace TaskFlow.Web.Controllers
                     Id = Guid.NewGuid(),
                     Title = model.Title,
                     Description = model.Description,
-                    DueDate = model.DueDate,
+                    DueDate = DateTime.SpecifyKind(model.DueDate, DateTimeKind.Utc),
                     StatusId = model.StatusId,
                     Priority = model.Priority
                 };

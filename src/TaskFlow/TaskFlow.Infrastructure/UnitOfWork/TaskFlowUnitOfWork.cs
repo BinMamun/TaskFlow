@@ -15,6 +15,7 @@ namespace TaskFlow.Infrastructure.UnitOfWork
         {
             StatusRepository = statusRepository;
             TaskItemRepository = taskItemRepository;
+            TaskDependencyRepository = taskDependencyRepository;
         }
 
         public IStatusRepository StatusRepository { get; private set; }

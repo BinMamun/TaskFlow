@@ -37,10 +37,10 @@ namespace TaskFlow.Application
                 {
                     var taskDepenedency = new TaskDependency()
                     {
-                        Id = taskId,
+                        Id = Guid.NewGuid(),
+                        TaskItemId = taskId,
                         PrerequisiteTaskId = prerequisiteId
                     };
-
                     await _taskUnitOfWork.TaskDependencyRepository.AddAsync(taskDepenedency);
                 }
             }

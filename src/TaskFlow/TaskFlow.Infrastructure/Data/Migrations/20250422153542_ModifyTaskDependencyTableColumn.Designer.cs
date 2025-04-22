@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskFlow.Web.Data;
@@ -11,9 +12,11 @@ using TaskFlow.Web.Data;
 namespace TaskFlow.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250422153542_ModifyTaskDependencyTableColumn")]
+    partial class ModifyTaskDependencyTableColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,6 +58,8 @@ namespace TaskFlow.Infrastructure.Data.Migrations
 
                     b.HasKey("TaskItemId", "PrerequisiteTaskId");
 
+                    b.HasIndex("Id");
+
                     b.HasIndex("PrerequisiteTaskId");
 
                     b.ToTable("TaskDependencies");
@@ -93,15 +98,15 @@ namespace TaskFlow.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("TaskFlow.Domain.Entities.TaskDependency", b =>
                 {
-                    b.HasOne("TaskFlow.Domain.Entities.TaskItem", "PrerequisiteTask")
-                        .WithMany("DependentLinks")
-                        .HasForeignKey("PrerequisiteTaskId")
+                    b.HasOne("TaskFlow.Domain.Entities.TaskItem", "TaskItem")
+                        .WithMany("PrerequisiteLinks")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TaskFlow.Domain.Entities.TaskItem", "TaskItem")
-                        .WithMany("PrerequisiteLinks")
-                        .HasForeignKey("TaskItemId")
+                    b.HasOne("TaskFlow.Domain.Entities.TaskItem", "PrerequisiteTask")
+                        .WithMany("DependentLinks")
+                        .HasForeignKey("PrerequisiteTaskId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

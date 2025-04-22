@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label asp-for="Title"></label>
                         <input asp-for="Title" type="text" class="form-control"
-                               id="taskName" name="taskName" placeholder="Title">
+                               id="title" name="title" placeholder="Title">
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -76,7 +76,7 @@
     <script>
         $('#create-task').validate({
             rules: {
-                taskName: {
+                title: {
                     required: true
                 },
                 dueDate: {
@@ -91,7 +91,7 @@
 
             },
             messages: {
-                taskName: {
+                title: {
                     required: "Title is required"
                 },
                 dueDate: {

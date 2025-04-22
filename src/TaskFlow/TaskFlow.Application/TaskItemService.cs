@@ -17,5 +17,10 @@ namespace TaskFlow.Application
         {
             return await _taskUnitOfWork.TaskItemRepository.GetAllAsync();
         }
+
+        public async Task<IList<Status>> GetStatusListAsync()
+        {
+            return await _taskUnitOfWork.StatusRepository.GetAllAsync();
+        }
     }
 }

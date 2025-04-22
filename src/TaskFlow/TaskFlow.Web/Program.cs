@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -11,6 +12,11 @@ var configuration = LoggerExtension.ConfigureBootstrapLogger();
 try
 {
     Log.Information("Application starting...");
+
+    var defaultCulture = new CultureInfo("en-GB");
+    CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+    CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
+
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.

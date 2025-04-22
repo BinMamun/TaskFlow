@@ -6,7 +6,7 @@ using TaskFlow.Web.Models;
 namespace TaskFlow.Web.Controllers
 {
     public class TaskItemController(
-        ILogger<TaskItemController> logger, 
+        ILogger<TaskItemController> logger,
         ITaskItemService taskItemService) : Controller
     {
         private readonly ILogger<TaskItemController> _logger = logger;
@@ -43,6 +43,18 @@ namespace TaskFlow.Web.Controllers
                         ).ToArray()
             };
             return Json(data);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var model = new TaskCreateModel();
+            var tasks = await _taskItemService.GetTaskListAsync();
+            var statuses = await _taskItemService.GetStatusListAsync();
+
+            model.SetAllTasks(tasks);
+            model.SetAllStatuses(statuses);
+
+            return View(model);
         }
     }
 }

@@ -10,5 +10,8 @@
         public Status Status { get; set; }
         public Priority Priority { get; set; }
 
+        public ICollection<TaskDependency>? PrerequisiteLinks { get; set; }
+        public ICollection<TaskDependency>? DependentLinks { get; set; }
+
     }
 }

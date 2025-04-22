@@ -22,5 +22,29 @@ namespace TaskFlow.Application
         {
             return await _taskUnitOfWork.StatusRepository.GetAllAsync();
         }
+
+        public async Task CreateNewTaskAsync(TaskItem taskItem)
+        {
+            await _taskUnitOfWork.TaskItemRepository.AddAsync(taskItem);
+            await _taskUnitOfWork.SaveAsync();
+        }
+
+        public async Task CreateNewDependencyAsync(Guid taskId, List<Guid> prerequisiteIds)
+        {
+            if (taskId != Guid.Empty && prerequisiteIds != null)
+            {
+                foreach (var prerequisiteId in prerequisiteIds)
+                {
+                    var taskDepenedency = new TaskDependency()
+                    {
+                        Id = taskId,
+                        PrerequisiteTaskId = prerequisiteId
+                    };
+
+                    await _taskUnitOfWork.TaskDependencyRepository.AddAsync(taskDepenedency);
+                }
+            }
+            await _taskUnitOfWork.SaveAsync();
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace TaskFlow.Domain.ServiceInterfaces
         Task<(IList<TaskItem> data, int total, int totalDisplay)> GetAllTasksAsync(int pageIndex, int pageSize, TaskItemDto search, string? order);
         Task<IList<TaskItem>> GetTaskListAsync();
         Task<IList<Status>> GetStatusListAsync();
+        Task CreateNewTaskAsync(TaskItem taskItem);
+        Task CreateNewDependencyAsync(Guid taskId, List<Guid> prerequisiteIds);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TaskFlow.Domain.Entities;
 
 namespace TaskFlow.Web.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -18,7 +19,7 @@ namespace TaskFlow.Web.Data
         }
 
         public DbSet<Status> Statuses { get; set; } 
-        public IList<TaskItem> TaskItems { get; set; }
+        public DbSet<TaskItem> TaskItems { get; set; }
         public DbSet<TaskDependency> TaskDependencies { get; set; }
     }
 }

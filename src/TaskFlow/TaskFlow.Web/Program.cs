@@ -2,6 +2,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using TaskFlow.Infrastructure.Data.SeedingMethod;
 using TaskFlow.Web;
 using TaskFlow.Web.Data;
 
@@ -30,8 +31,15 @@ try
 
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-    builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+    //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+    builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
     builder.Services.AddControllersWithViews();
 
@@ -62,8 +70,8 @@ try
         pattern: "{controller=Home}/{action=Index}/{id?}")
         .WithStaticAssets();
 
-    app.MapRazorPages()
-       .WithStaticAssets();
+    //app.MapRazorPages()
+    //   .WithStaticAssets();
     #endregion
 
     #region Auto Migration
@@ -74,6 +82,8 @@ try
     try
     {
         await context.Database.MigrateAsync();
+        await SeedRolesAndUsersFromJson.SeedAsync(services);
+        await SeedTaskContextEntityFromJson.SeedAsync(context);
         Log.Information("Migrations upto dated ...");
     }
     catch (Exception ex)

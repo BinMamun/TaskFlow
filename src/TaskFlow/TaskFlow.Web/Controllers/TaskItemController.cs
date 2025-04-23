@@ -4,6 +4,7 @@ using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TaskFlow.Application;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.ServiceInterfaces;
 using TaskFlow.Web.Models;
@@ -155,6 +156,12 @@ namespace TaskFlow.Web.Controllers
             model.SetAllStatuses(statuses);
 
             return View(model);
+        }
+        
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _taskItemService.DeleteTaskAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }

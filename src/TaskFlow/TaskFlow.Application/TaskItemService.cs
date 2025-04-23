@@ -90,5 +90,20 @@ namespace TaskFlow.Application
             await _taskUnitOfWork.SaveAsync();
         }
 
+        public async Task DeleteTaskAsync(Guid id)
+        {
+            await _taskUnitOfWork.TaskItemRepository.RemoveAsync(id);
+
+            var existingDependencies = await _taskUnitOfWork.TaskDependencyRepository
+                .GetDependenciesAsync(id);
+
+            foreach (var dep in existingDependencies)
+            {
+                await _taskUnitOfWork.TaskDependencyRepository.RemoveAsync(dep);
+            }
+
+            await _taskUnitOfWork.SaveAsync();
+        }
+
     }
 }

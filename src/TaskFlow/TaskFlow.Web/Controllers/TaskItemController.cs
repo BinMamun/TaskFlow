@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -95,6 +96,30 @@ namespace TaskFlow.Web.Controllers
             var statuses = await _taskItemService.GetStatusListAsync();
 
             model.SetAllTasks(tasks);
+            model.SetAllStatuses(statuses);
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(Guid Id)
+        {
+            var task = await _taskItemService.GetTaskAsync(Id);
+
+            var model = new TaskEditModel()
+            {
+                Title = task.Title,
+                Description = task.Description,
+                DueDate = task.DueDate,
+                Priority = task.Priority,
+                StatusId = task.StatusId,
+                
+            };
+            var tasks = await _taskItemService.GetTaskListAsync();
+            var statuses = await _taskItemService.GetStatusListAsync();
+
+            var taskList = tasks.Select(x => x.Title == task.Title).ToList();
+
+            model.SetAllTasks((IList<TaskItem>)taskList);
             model.SetAllStatuses(statuses);
 
             return View(model);

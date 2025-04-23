@@ -75,7 +75,6 @@ namespace TaskFlow.Web.Controllers
             var status = await _statusService.GetStatusById(id);
             var model = new StatusEditModel()
             {
-                Id = id,
                 StatusName = status.StatusName,
                 StatusDescription = status.StatusDescription
             };

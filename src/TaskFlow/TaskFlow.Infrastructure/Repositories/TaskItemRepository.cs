@@ -43,5 +43,13 @@ namespace TaskFlow.Infrastructure.Repositories
             return (data, total, totalDisplay);
         }
 
+        public async Task<TaskItem> GetTaskWithPrerequisites(Guid id)
+        {
+            var result = await _dbSet.Include(x => x.PrerequisiteLinks)
+                                .ThenInclude(y => y.PrerequisiteTask)
+                                .Include(s => s.Status)
+                                .FirstOrDefaultAsync(z => z.Id == id);
+            return result;
+        }
     }
 }

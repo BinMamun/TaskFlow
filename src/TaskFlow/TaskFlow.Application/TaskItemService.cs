@@ -46,5 +46,11 @@ namespace TaskFlow.Application
             }
             await _taskUnitOfWork.SaveAsync();
         }
+
+        public Task<TaskItem> GetTaskAsync(Guid id)
+        {
+            return _taskUnitOfWork.TaskItemRepository.GetTaskWithPrerequisites(id);
+
+        }
     }
 }

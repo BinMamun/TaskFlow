@@ -10,5 +10,6 @@ namespace TaskFlow.Domain.ServiceInterfaces
         Task<IList<Status>> GetStatusListAsync();
         Task CreateNewTaskAsync(TaskItem taskItem);
         Task CreateNewDependencyAsync(Guid taskId, List<Guid> prerequisiteIds);
+        Task<TaskItem> GetTaskAsync(Guid id);
     }
 }

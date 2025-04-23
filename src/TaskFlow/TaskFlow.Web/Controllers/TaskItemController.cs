@@ -20,7 +20,7 @@ namespace TaskFlow.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var model = new TaskListModel();
-            
+
             var status = await _taskItemService.GetStatusListAsync();
             model.SetAllStatuses(status);
             return View(model);
@@ -112,14 +112,46 @@ namespace TaskFlow.Web.Controllers
                 DueDate = task.DueDate,
                 Priority = task.Priority,
                 StatusId = task.StatusId,
-                
+
             };
             var tasks = await _taskItemService.GetTaskListAsync();
             var statuses = await _taskItemService.GetStatusListAsync();
 
-            var taskList = tasks.Select(x => x.Title == task.Title).ToList();
+            model.SetAllStatuses(statuses);
+            model.SetAllTasks(tasks);
+            return View(model);
+        }
 
-            model.SetAllTasks((IList<TaskItem>)taskList);
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(TaskEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var task = await _taskItemService.GetTaskAsync(model.Id);
+
+                task.Title = model.Title;
+                task.Description = model.Description;
+                task.DueDate = DateTime.SpecifyKind(model.DueDate, DateTimeKind.Utc);
+                task.StatusId = model.StatusId;
+                task.Priority = model.Priority;
+               
+
+                await _taskItemService.UpdateTaskAsync(task);
+
+                if (model.DueDate != DateTime.MinValue && model.PrerequisiteIds != null)
+                {
+                    await _taskItemService
+                        .UpdateDependencyAsync(model.Id, model.PrerequisiteIds);
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            var tasks = await _taskItemService.GetTaskListAsync();
+            var statuses = await _taskItemService.GetStatusListAsync();
+
+            model.SetAllTasks(tasks);
             model.SetAllStatuses(statuses);
 
             return View(model);

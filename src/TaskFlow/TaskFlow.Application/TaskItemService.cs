@@ -1,4 +1,5 @@
-﻿using TaskFlow.Domain;
+﻿using System.Threading.Tasks;
+using TaskFlow.Domain;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.ServiceInterfaces;
 
@@ -52,5 +53,42 @@ namespace TaskFlow.Application
             return _taskUnitOfWork.TaskItemRepository.GetTaskWithPrerequisites(id);
 
         }
+
+        public async Task UpdateTaskAsync(TaskItem task)
+        {
+            await _taskUnitOfWork.TaskItemRepository.EditAsync(task);
+            await _taskUnitOfWork.SaveAsync();
+        }
+
+        public async Task UpdateDependencyAsync(Guid taskId, List<Guid>? prerequisiteIds)
+        {
+            if (prerequisiteIds == null || prerequisiteIds.Count() <= 0)
+            {
+                return;
+            }
+
+            var existingDependencies = await _taskUnitOfWork.TaskDependencyRepository
+                .GetDependenciesAsync(taskId);
+
+            foreach (var dep in existingDependencies)
+            {
+                await _taskUnitOfWork.TaskDependencyRepository.RemoveAsync(dep);
+            }
+
+            foreach (var prerequisiteId in prerequisiteIds)
+            {
+                var taskDependency = new TaskDependency
+                {
+                    Id = Guid.NewGuid(),
+                    TaskItemId = taskId,
+                    PrerequisiteTaskId = prerequisiteId
+                };
+
+                await _taskUnitOfWork.TaskDependencyRepository.AddAsync(taskDependency);
+            }
+
+            await _taskUnitOfWork.SaveAsync();
+        }
+
     }
 }

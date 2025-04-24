@@ -1,0 +1,85 @@
+﻿@model RegistrationModel
+
+@{
+    Layout = "~/Views/Shared/_LogInRegistrationLayout.cshtml";
+    ViewData["Title"] = "Register";
+}
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-sm p-4" style="min-width: 400px;">
+        <h4 class="card-title text-center mb-4">@ViewData["Title"]</h4>
+
+        @if (ViewData.ModelState[""]?.Errors.Count > 0)
+        {
+            <div class="alert alert-danger">
+                <strong>Something went wrong! Please check the details and try again.</strong>
+            </div>
+        }
+
+        <form asp-controller="Account" asp-action="Register" method="post" id="registration-form">
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email" id="email" name="email"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" id="password" name="password" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" id="confirmPassword" name="confirmPassword" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-2">Register</button>
+        </form>
+
+        <div class="text-center mt-3">
+            Already have an account?
+            <a asp-controller="Account" asp-action="Login">Login here</a>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="../Shared/_ValidationScriptsPartial.cshtml" />
+    <script>
+           $('#registration-form').validate({
+            rules: {
+                email: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                },
+                confirmPassword: {
+                    required: true,
+                }
+            },
+            messages: {
+                email: {
+                    required: "Email is required",
+                },
+                password: {
+                    required: "Password is required",
+                },
+                confirmPassword: {
+                    required: "Confirm Password is required",
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    </script>
+}

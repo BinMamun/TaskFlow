@@ -105,5 +105,19 @@ namespace TaskFlow.Application
             await _taskUnitOfWork.SaveAsync();
         }
 
+        public async Task<int> CompletedTaskCountAsync()
+        {
+            return await _taskUnitOfWork.TaskItemRepository.GetCompletedTaskCountAsync();
+        }
+
+        public async Task<int> InProgressTaskCountAsync()
+        {
+            return await _taskUnitOfWork.TaskItemRepository.GetInProgressTaskCountAsync();
+        }
+
+        public async Task<int> PendingTaskCountAsync()
+        {
+            return await _taskUnitOfWork.TaskItemRepository.GetPendingTaskCountAsync();
+        }
     }
 }

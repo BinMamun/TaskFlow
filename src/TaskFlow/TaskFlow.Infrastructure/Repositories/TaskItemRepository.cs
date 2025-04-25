@@ -51,5 +51,20 @@ namespace TaskFlow.Infrastructure.Repositories
                             .Include(x => x.Status)
                             .FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<int> GetPendingTaskCountAsync()
+        {
+            return await GetCountAsync(x => x.Status.StatusName == "Pending");
+        }
+
+        public async Task<int> GetInProgressTaskCountAsync()
+        {
+            return await GetCountAsync(x => x.Status.StatusName == "In-Progress");
+        }
+        
+        public async Task<int> GetCompletedTaskCountAsync()
+        {
+            return await GetCountAsync(x => x.Status.StatusName == "Completed");
+        }
     }
 }

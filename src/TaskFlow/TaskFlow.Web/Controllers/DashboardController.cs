@@ -30,17 +30,11 @@ namespace TaskFlow.Web.Controllers
         [HttpPost]
         public async Task<JsonResult> GetUpcomingDeadLineTasksJsonData([FromBody] TaskListModel model)
         {
-            var result = await _taskItemService.GetAllTasksAsync(
-                model.PageIndex,
-                model.PageSize,
-                model.SearchParams,
-                model.FormatSortExpression("DueDate", "Title", "Description", "Priority", "StatusId", "StatusName"));
+            var result = await _taskItemService.GetUpcomingDeadLineTaskList();
 
             var data = new
             {
-                recordsTotal = result.total,
-                recordsFiltered = result.totalDisplay,
-                data = (from records in result.data
+                data = (from records in result
                         select new string[]
                             {
                                 HttpUtility.HtmlEncode(records.DueDate.ToString("dd-MMM-yyyy")),
@@ -48,7 +42,6 @@ namespace TaskFlow.Web.Controllers
                                 HttpUtility.HtmlEncode(records.Description),
                                 HttpUtility.HtmlEncode(records.Priority),
                                 HttpUtility.HtmlEncode(records.Status.StatusName.ToString()),
-                                records.Id.ToString()
                             }
                         ).ToArray()
             };

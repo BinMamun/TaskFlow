@@ -70,8 +70,6 @@ try
         pattern: "{controller=Dashboard}/{action=Index}/{id?}")
         .WithStaticAssets();
 
-    //app.MapRazorPages()
-    //   .WithStaticAssets();
     #endregion
 
     #region Auto Migration

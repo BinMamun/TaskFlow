@@ -5,7 +5,7 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
+<div class="container d-flex justify-content-center align-items-center mt-5">
     <div class="card shadow-sm p-4" style="min-width: 400px;">
         <h4 class="card-title text-center mb-4">@ViewData["Title"]</h4>
 
@@ -23,13 +23,20 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" type="text" class="form-control" placeholder="Enter your User Name" id="userName" name="userName" />
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Password"></label>
                 <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" id="password" name="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="ConfirmPassword"></label>
                 <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" id="confirmPassword" name="confirmPassword" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block mt-2">Register</button>
@@ -37,7 +44,7 @@
 
         <div class="text-center mt-3">
             Already have an account?
-            <a asp-controller="Account" asp-action="Login">Login here</a>
+            <a asp-controller="Account" asp-action="Login">Login</a>
         </div>
     </div>
 </div>
@@ -51,6 +58,9 @@
                 email: {
                     required: true,
                 },
+                userName: {
+                    required: true,
+                },
                 password: {
                     required: true,
                 },
@@ -61,6 +71,9 @@
             messages: {
                 email: {
                     required: "Email is required",
+                },
+                userName: {
+                    required: "UserName is required",
                 },
                 password: {
                     required: "Password is required",

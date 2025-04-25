@@ -4,14 +4,14 @@
 	ViewData["Title"] = "Login";
 }
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
+<div class="container d-flex justify-content-center align-items-center mt-5">
 	<div class="card shadow-sm p-4" style="min-width: 350px;">
 		<h4 class="card-title text-center mb-4">@ViewData["Title"]</h4>
 		<form asp-controller="Account" asp-action="Login" method="post" id="login-form">
 			<div class="form-group">
-				<label asp-for="Email"></label>
-				<input asp-for="Email" class="form-control" placeholder="Enter your email"
-					   id="email" name="email" />
+				<label asp-for="UserName"></label>
+				<input asp-for="UserName" class="form-control" placeholder="Enter your email"
+					   id="userName" name="userName" />
 			</div>
 
 			<div class="form-group">
@@ -28,7 +28,8 @@
 		</form>
 
 		<div class="text-center mt-3">
-			<a href="@Url.Action("Register", "Account")">Register a new account</a>
+			Don't have an account?
+			<a asp-controller="Account" asp-action="Register">Register</a>
 		</div>
 	</div>
 </div>
@@ -38,7 +39,7 @@
 	<script>
 		   $('#login-form').validate({
 			rules: {
-				email: {
+				userName: {
 					required: true,
 				},
 				password: {
@@ -46,8 +47,8 @@
 				}
 			},
 			messages: {
-				email: {
-					required: "Email is required",
+				userName: {
+					required: "UserName is required",
 				},
 				password: {
 					required: "Password is required",

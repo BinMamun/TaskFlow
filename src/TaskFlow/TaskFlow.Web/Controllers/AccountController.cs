@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Diagnostics;
 using System.Text;
 using TaskFlow.Web.Models;
 
@@ -30,11 +31,12 @@ namespace TaskFlow.Web.Controllers
             {
                 var user = new IdentityUser
                 {
-                    UserName = model.Email,
-                    Email = model.Email
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    PasswordHash = model.Password
                 };
 
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
@@ -74,22 +76,11 @@ namespace TaskFlow.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
                     return LocalRedirect(returnUrl);
-                }
-
-                if (result.IsLockedOut)
-                {
-                    ModelState.AddModelError(string.Empty, "Your account is locked out.");
-                    return View(model);
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
                 }
             }
             return View(model);
@@ -101,6 +92,12 @@ namespace TaskFlow.Web.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction("Login", "Account");
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

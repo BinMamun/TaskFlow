@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using TaskFlow.Web.Models;
 
 namespace TaskFlow.Web.Controllers
 {
+    [Authorize]
     public class TaskItemController(
         ILogger<TaskItemController> logger,
         ITaskItemService taskItemService) : Controller
@@ -157,7 +159,8 @@ namespace TaskFlow.Web.Controllers
 
             return View(model);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _taskItemService.DeleteTaskAsync(id);

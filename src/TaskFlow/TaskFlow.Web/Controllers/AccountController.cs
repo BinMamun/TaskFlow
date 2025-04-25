@@ -8,7 +8,7 @@ using TaskFlow.Web.Models;
 
 namespace TaskFlow.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AccountController(UserManager<IdentityUser> userManager,
                              SignInManager<IdentityUser> signInManager) : Controller
     {

@@ -8,6 +8,7 @@ using TaskFlow.Web.Models;
 
 namespace TaskFlow.Web.Controllers
 {
+    [Authorize]
     public class StatusController(
         ILogger<StatusController> logger,
         IStatusService statusService) : Controller
@@ -102,6 +103,7 @@ namespace TaskFlow.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _statusService.DeleteStatusAsync(id);

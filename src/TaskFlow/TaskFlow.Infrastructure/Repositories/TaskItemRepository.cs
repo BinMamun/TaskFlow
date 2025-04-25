@@ -71,7 +71,7 @@ namespace TaskFlow.Infrastructure.Repositories
         {
             var plusSevenDays = DateTime.UtcNow.AddDays(7);
             var upcomingTasks = await GetAsync(
-                                filter: x => x.DueDate <= plusSevenDays,
+                                filter: x => x.DueDate <= plusSevenDays && x.Status.StatusName != "Completed" ,
                                 orderBy: x => x.OrderBy(y => y.DueDate),
                                 include: x => x.Include(y => y.Status),
                                 isTrackingOff: false);

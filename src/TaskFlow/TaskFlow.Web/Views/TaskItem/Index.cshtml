@@ -36,21 +36,21 @@
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label>Priority</label>
-								<select asp-for="SearchParams.Priority" 
-								asp-items="Html.GetEnumSelectList<Priority>()" class="form-control">
+								<select asp-for="SearchParams.Priority"
+										asp-items="Html.GetEnumSelectList<Priority>()" class="form-control">
 									<option selected value="0">Select Priority</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
-								<label>Create Date From</label>
+								<label>From Date</label>
 								<input type="text" asp-for="SearchParams.FromDate" class="form-control" />
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
-								<label>Create Date To</label>
+								<label>To Date</label>
 								<input type="text" asp-for="SearchParams.ToDate" class="form-control" />
 							</div>
 						</div>
@@ -150,8 +150,47 @@
 								</button>`;
 								}
 							}
-						]
-				});
+						],
+					rowCallback: function (row, data, index) {
+
+					let statusColorClass = '';
+
+					switch (data[4]) {
+						case "Completed":
+							statusColorClass = 'badge bg-success';
+							break;
+						case "Pending":
+							statusColorClass = 'badge bg-danger';
+							break;
+						case "In-Progress":
+							statusColorClass = 'badge bg-warning text-dark';
+							break;
+						default:
+							statusColorClass = 'badge bg-secondary';
+							break;
+					}
+
+					$('td:eq(4)', row).html(`<span class="${statusColorClass}">${data[4]}</span>`);
+
+						let priorityClass = '';
+						switch (data[3]) {
+							case "High":
+								priorityClass = 'badge bg-danger';
+								break;
+							case "Medium":
+								priorityClass = 'badge bg-warning text-dark';
+								break;
+							case "Low":
+								priorityClass = 'badge bg-primary';
+								break;
+							default:
+								priorityClass = 'badge bg-secondary';
+								break;
+						}
+
+						$('td:eq(3)', row).html(`<span class="${priorityClass}">${data[3]}</span>`);
+					}
+		});
 	</script>
 }
 

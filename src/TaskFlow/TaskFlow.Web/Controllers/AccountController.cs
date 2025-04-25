@@ -33,10 +33,9 @@ namespace TaskFlow.Web.Controllers
                 {
                     UserName = model.UserName,
                     Email = model.Email,
-                    PasswordHash = model.Password
                 };
 
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
@@ -76,7 +75,7 @@ namespace TaskFlow.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password.Trim(), model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {

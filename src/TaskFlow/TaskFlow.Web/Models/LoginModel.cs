@@ -4,7 +4,7 @@ namespace TaskFlow.Web.Models
 {
     public class LoginModel
     {
-        [Required]
+        [Required, Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required, DataType(DataType.Password)]

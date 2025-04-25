@@ -119,5 +119,10 @@ namespace TaskFlow.Application
         {
             return await _taskUnitOfWork.TaskItemRepository.GetPendingTaskCountAsync();
         }
+
+        public async Task<IList<TaskItem>> GetUpcomingDeadLineTaskList()
+        {
+            return await _taskUnitOfWork.TaskItemRepository.GetUpcomingDeadLineTasks();
+        }
     }
 }

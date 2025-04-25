@@ -10,5 +10,6 @@ namespace TaskFlow.Domain.RepositoryContracts
         Task<int> GetPendingTaskCountAsync();
         Task<int> GetInProgressTaskCountAsync();
         Task<int> GetCompletedTaskCountAsync();
+        Task<IList<TaskItem>> GetUpcomingDeadLineTasks();
     }
 }

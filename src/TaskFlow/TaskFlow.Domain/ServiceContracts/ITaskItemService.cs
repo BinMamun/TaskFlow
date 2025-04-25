@@ -18,5 +18,6 @@ namespace TaskFlow.Domain.ServiceInterfaces
         Task<int> CompletedTaskCountAsync();
         Task<int> InProgressTaskCountAsync();
         Task<int> PendingTaskCountAsync();
+        Task<IList<TaskItem>> GetUpcomingDeadLineTaskList();
     }
 }

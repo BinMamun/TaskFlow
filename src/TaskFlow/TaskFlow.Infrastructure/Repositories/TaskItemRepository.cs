@@ -61,10 +61,22 @@ namespace TaskFlow.Infrastructure.Repositories
         {
             return await GetCountAsync(x => x.Status.StatusName == "In-Progress");
         }
-        
+
         public async Task<int> GetCompletedTaskCountAsync()
         {
             return await GetCountAsync(x => x.Status.StatusName == "Completed");
+        }
+
+        public async Task<IList<TaskItem>> GetUpcomingDeadLineTasks()
+        {
+            var plusSevenDays = DateTime.UtcNow.AddDays(7);
+            var upcomingTasks = await GetAsync(
+                                filter: x => x.DueDate <= plusSevenDays,
+                                orderBy: x => x.OrderBy(y => y.DueDate),
+                                include: x => x.Include(y => y.Status),
+                                isTrackingOff: false);
+
+            return upcomingTasks;
         }
     }
 }

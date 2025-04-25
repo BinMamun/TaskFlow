@@ -71,3 +71,135 @@
         </div>
     </div>
 </section>
+
+<section class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<!-- /.card -->
+				<div class="card">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-sm-12 col-md-10">
+							<h3 class="card-title">Upcoming Task List</h3>
+						</div>
+						<div class="col-sm-12 col-md-2 d-flex justify-content-end">
+							
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<table id="task-table" class="table table-sm table-hover">
+					<thead class="table-header">
+						<tr>
+							<th>Due Date</th>
+							<th>Task</th>
+							<th>Description</th>
+							<th>Priority</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+				</table>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section styles {
+	<link rel="stylesheet" href="~/AdminLte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="~/AdminLte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker3.standalone.min.css"   />
+}
+
+@section Scripts {
+	<script src="~/AdminLte/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script src="~/AdminLte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/AdminLte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="~/AdminLte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+	<partial name="../Shared/_ValidationScriptsPartial.cshtml" />
+
+	<script>
+		$("#task-table").DataTable({
+					processing: true,
+					serverSide: true,
+					responsive: true,
+					filter: false,
+					autoWidth: true,
+					paging: false,
+					info: false,
+					ajax: {
+						url: "/Dashboard/GetUpcomingDeadLineTasksJsonData",
+						type: "POST",
+						contentType: "application/json",
+						dataType: "json",
+						data: function (d) {
+							d.SearchParams = {
+								
+							};
+							return JSON.stringify(d);
+						}
+					},
+					// columnDefs: [
+					// 		{
+					// 			orderable: false,
+					// 			targets: 5,
+					// 			render: function (data, type, row) {
+					// 				return `
+					// 			<button type="submit" class="btn btn-sm"
+					// 					onclick="window.location.href='/TaskItem/Edit/${data}'"
+					// 					value='${data}' data-id='${data}' title="Edit">
+					// 				<i class="text-primary bi bi-pencil-square"></i>
+					// 			</button>
+
+					// 			<button class="btn btn-sm show-bs-modal"
+					// 					data-toggle="modal" data-target="#delete-modal"
+					// 					data-id='${data}' value='${data}' title="Delete">
+					// 				<i class="text-danger bi bi-trash"></i>
+					// 			</button>`;
+					// 			}
+					// 		}
+					// 	],
+					rowCallback: function (row, data, index) {
+
+					let statusColorClass = '';
+
+					switch (data[4]) {
+						case "Completed":
+							statusColorClass = 'badge bg-success';
+							break;
+						case "Pending":
+							statusColorClass = 'badge bg-danger';
+							break;
+						case "In-Progress":
+							statusColorClass = 'badge bg-warning text-dark';
+							break;
+						default:
+							statusColorClass = 'badge bg-secondary';
+							break;
+					}
+
+					$('td:eq(4)', row).html(`<span class="${statusColorClass}">${data[4]}</span>`);
+
+						let priorityClass = '';
+						switch (data[3]) {
+							case "High":
+								priorityClass = 'badge bg-danger';
+								break;
+							case "Medium":
+								priorityClass = 'badge bg-warning text-dark';
+								break;
+							case "Low":
+								priorityClass = 'badge bg-primary';
+								break;
+							default:
+								priorityClass = 'badge bg-secondary';
+								break;
+						}
+
+						$('td:eq(3)', row).html(`<span class="${priorityClass}">${data[3]}</span>`);
+					}
+		});
+	</script>
+}

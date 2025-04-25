@@ -12,8 +12,8 @@ using TaskFlow.Web.Data;
 namespace TaskFlow.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250423165910_AddDBMigration")]
-    partial class AddDBMigration
+    [Migration("20250425103456_CreateMigrations")]
+    partial class CreateMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

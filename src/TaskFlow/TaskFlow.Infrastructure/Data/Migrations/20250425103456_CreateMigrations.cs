@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace TaskFlow.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddDBMigration : Migration
+    public partial class CreateMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
